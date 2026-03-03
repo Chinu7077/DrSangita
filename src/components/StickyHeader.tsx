@@ -57,7 +57,7 @@ export default function StickyHeader() {
                 Dr. Sangita Kumari Nayak
               </h1>
               <p className="text-xs text-gray-500">
-                BHMS • Lic. #HMP-2024-1856
+                BHMS • Lic. # C/5048
               </p>
             </div>
           </div>

@@ -1,8 +1,16 @@
 import { Instagram, Facebook, Linkedin, Twitter, Youtube } from "lucide-react";
 
 const socials = [
-  { icon: Instagram, label: "Instagram", href: "https://instagram.com/" },
-  { icon: Facebook, label: "Facebook", href: "https://facebook.com/" },
+  {
+    icon: Instagram,
+    label: "Instagram",
+    href: "https://www.instagram.com/drsangitakumarinayak/",
+  },
+  {
+    icon: Facebook,
+    label: "Facebook",
+    href: "https://www.facebook.com/sangitakumari.nayak.583",
+  },
   { icon: Linkedin, label: "LinkedIn", href: "https://linkedin.com/" },
   { icon: Twitter, label: "X (Twitter)", href: "https://x.com/" },
   { icon: Youtube, label: "YouTube", href: "https://youtube.com/" },
@@ -36,7 +44,8 @@ const SocialSection = () => {
 
         <div className="mt-12 pt-8 border-t border-border">
           <p className="text-xs text-muted-foreground">
-            © {new Date().getFullYear()} Dr. Sangita Kumari Nayak • BHMS • All rights reserved
+            © {new Date().getFullYear()} Dr. Sangita Kumari Nayak • BHMS • All
+            rights reserved
           </p>
         </div>
       </div>

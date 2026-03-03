@@ -1,6 +1,5 @@
 import { ArrowDown } from "lucide-react";
 
-
 const HeroSection = () => {
   const scrollToContact = () => {
     document
@@ -21,7 +20,7 @@ const HeroSection = () => {
               Homeopathy Specialist
             </p>
             <h2 className="animate-fade-up-delay-1 text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground leading-tight mb-5">
-              Healing the Natural Way
+              Healing in Holistic Way
             </h2>
             <blockquote className="animate-fade-up-delay-2 text-base sm:text-lg text-muted-foreground italic border-l-4 border-primary/40 pl-4 mb-6">
               "The highest ideal of cure is the rapid, gentle, and permanent
@@ -31,9 +30,9 @@ const HeroSection = () => {
               </span>
             </blockquote>
             <p className="animate-fade-up-delay-2 text-sm sm:text-base text-muted-foreground mb-8 max-w-md mx-auto md:mx-0">
-              With over 10 years of experience in classical homeopathy, I
+              With over 7 years of experience in classical homeopathy, I
               provide personalized treatment plans that address the root cause
-              of your health concerns — naturally and holistically.
+              of your health concerns naturally and holistically.
             </p>
             <div className="animate-fade-up-delay-3 flex flex-col sm:flex-row gap-3 justify-center md:justify-start">
               <button
@@ -61,7 +60,7 @@ const HeroSection = () => {
               <div className="absolute -inset-4 gradient-primary opacity-10 rounded-3xl blur-2xl" />
 
               <img
-                src="/DrSangita.png"
+                src="/sangp.png"
                 alt="Dr. Sangita Kumari Nayak, Homeopathy Specialist"
                 className="relative w-56 sm:w-64 md:w-80 lg:w-96 rounded-3xl shadow-xl object-contain"
                 loading="eager"
