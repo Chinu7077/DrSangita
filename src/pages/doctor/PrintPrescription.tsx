@@ -84,18 +84,20 @@ body {
             />
 
             <div>
-              <h1 className="text-2xl font-bold text-emerald-800 leading-tight">
-                Dr. Sangita Kumari Nayak
-              </h1>
+  <h1 className="text-2xl font-bold text-emerald-800 leading-tight">
+    Dr. Sangita Kumari Nayak
+  </h1>
 
-              <p className="mt-2 text-gray-600 text-sm">
-                Healing takes time. Trust the process and stay positive.
-              </p>
-            </div>
+  <p className="mt-2 text-gray-600 text-sm">
+    Healing takes time. Trust the process and stay positive.
+  </p>
+</div>
           </div>
 
           <div className="text-right shrink-0">
-            <div className="font-semibold text-lg">BHMS</div>
+            <div className="font-semibold text-lg">
+         BHMS
+            </div>
 
             <div className="text-sm text-gray-700">Homeopathy Specialist</div>
 

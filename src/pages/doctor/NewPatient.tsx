@@ -2,15 +2,22 @@ import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { useState } from "react";
+
 import { Loader2, UserPlus, Upload } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
+import { useState, useEffect } from "react";
 
 const schema = z.object({
   name: z.string().min(2).max(120),
@@ -41,6 +48,26 @@ export default function NewPatient() {
     resolver: zodResolver(schema),
     defaultValues: { first_visit_date: new Date().toISOString().slice(0, 10) },
   });
+  const dob = form.watch("dob");
+  useEffect(() => {
+    if (!dob) return;
+
+    const birthDate = new Date(dob);
+    const today = new Date();
+
+    let age = today.getFullYear() - birthDate.getFullYear();
+
+    const monthDiff = today.getMonth() - birthDate.getMonth();
+
+    if (
+      monthDiff < 0 ||
+      (monthDiff === 0 && today.getDate() < birthDate.getDate())
+    ) {
+      age--;
+    }
+
+    form.setValue("age", age);
+  }, [dob, form]);
 
   const onSubmit = async (values: Form) => {
     setSubmitting(true);
@@ -49,9 +76,11 @@ export default function NewPatient() {
       if (photoFile) {
         const ext = photoFile.name.split(".").pop()?.toLowerCase() ?? "jpg";
         const path = `${crypto.randomUUID()}.${ext}`;
-        const { error: upErr } = await supabase.storage.from("patient-photos").upload(path, photoFile, {
-          contentType: photoFile.type,
-        });
+        const { error: upErr } = await supabase.storage
+          .from("patient-photos")
+          .upload(path, photoFile, {
+            contentType: photoFile.type,
+          });
         if (upErr) throw upErr;
         photo_path = path;
       }
@@ -71,12 +100,18 @@ export default function NewPatient() {
         created_by: user.user?.id ?? null,
       };
 
-      const { data, error } = await supabase.from("patients").insert(insert).select("id, patient_id").single();
+      const { data, error } = await supabase
+        .from("patients")
+        .insert(insert)
+        .select("id, patient_id")
+        .single();
       if (error) throw error;
       toast.success(`Patient created: ${data.patient_id}`);
       navigate(`/doctor/patients/${data.id}`);
     } catch (err: unknown) {
-      toast.error(err instanceof Error ? err.message : "Failed to create patient");
+      toast.error(
+        err instanceof Error ? err.message : "Failed to create patient",
+      );
     } finally {
       setSubmitting(false);
     }
@@ -92,13 +127,22 @@ export default function NewPatient() {
     <div className="space-y-6 max-w-4xl">
       <div>
         <h1 className="text-3xl font-bold tracking-tight">New Patient</h1>
-        <p className="text-muted-foreground">A new Patient ID will be auto-generated.</p>
+        <p className="text-muted-foreground">
+          A new Patient ID will be auto-generated.
+        </p>
       </div>
 
-      <form onSubmit={form.handleSubmit(onSubmit)} className="glass rounded-2xl p-6 space-y-6">
+      <form
+        onSubmit={form.handleSubmit(onSubmit)}
+        className="glass rounded-2xl p-6 space-y-6"
+      >
         <div className="flex items-center gap-4">
           <div className="size-24 rounded-2xl bg-muted overflow-hidden grid place-items-center border">
-            {preview ? <img src={preview} alt="" className="size-full object-cover" /> : <UserPlus className="size-8 text-muted-foreground" />}
+            {preview ? (
+              <img src={preview} alt="" className="size-full object-cover" />
+            ) : (
+              <UserPlus className="size-8 text-muted-foreground" />
+            )}
           </div>
           <label className="cursor-pointer">
             <input
@@ -108,7 +152,9 @@ export default function NewPatient() {
               onChange={(e) => handlePhoto(e.target.files?.[0] ?? null)}
             />
             <Button type="button" variant="outline" asChild>
-              <span><Upload className="size-4 mr-2" /> Upload photo</span>
+              <span>
+                <Upload className="size-4 mr-2" /> Upload photo
+              </span>
             </Button>
           </label>
         </div>
@@ -122,7 +168,9 @@ export default function NewPatient() {
           </Field>
           <Field label="Gender">
             <Select onValueChange={(v) => form.setValue("gender", v)}>
-              <SelectTrigger><SelectValue placeholder="Select" /></SelectTrigger>
+              <SelectTrigger>
+                <SelectValue placeholder="Select" />
+              </SelectTrigger>
               <SelectContent>
                 <SelectItem value="Male">Male</SelectItem>
                 <SelectItem value="Female">Female</SelectItem>
@@ -134,7 +182,7 @@ export default function NewPatient() {
             <Input type="date" {...form.register("dob")} />
           </Field>
           <Field label="Age">
-            <Input type="number" {...form.register("age")} />
+            <Input type="number" readOnly {...form.register("age")} />
           </Field>
           <Field label="Mobile" error={form.formState.errors.mobile?.message}>
             <Input {...form.register("mobile")} />
@@ -146,7 +194,10 @@ export default function NewPatient() {
             <Input {...form.register("occupation")} />
           </Field>
           <Field label="Blood group">
-            <Input {...form.register("blood_group")} placeholder="A+, B+, O-..." />
+            <Input
+              {...form.register("blood_group")}
+              placeholder="A+, B+, O-..."
+            />
           </Field>
           <Field label="First visit date">
             <Input type="date" {...form.register("first_visit_date")} />
@@ -167,8 +218,18 @@ export default function NewPatient() {
         </Field>
 
         <div className="flex gap-3 justify-end">
-          <Button type="button" variant="outline" onClick={() => navigate("/doctor/patients")}>Cancel</Button>
-          <Button type="submit" disabled={submitting} className="bg-gradient-primary text-primary-foreground shadow-elegant">
+          <Button
+            type="button"
+            variant="outline"
+            onClick={() => navigate("/doctor/patients")}
+          >
+            Cancel
+          </Button>
+          <Button
+            type="submit"
+            disabled={submitting}
+            className="bg-gradient-primary text-primary-foreground shadow-elegant"
+          >
             {submitting && <Loader2 className="size-4 mr-2 animate-spin" />}
             Create patient
           </Button>
@@ -178,7 +239,15 @@ export default function NewPatient() {
   );
 }
 
-function Field({ label, error, children }: { label: string; error?: string; children: React.ReactNode }) {
+function Field({
+  label,
+  error,
+  children,
+}: {
+  label: string;
+  error?: string;
+  children: React.ReactNode;
+}) {
   return (
     <div className="space-y-1.5">
       <Label>{label}</Label>
