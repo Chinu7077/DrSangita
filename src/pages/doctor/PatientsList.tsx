@@ -46,7 +46,7 @@ export default function PatientsList() {
         <div className="relative">
           <Search className="size-4 absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" />
           <Input
-            placeholder="HOM-2026-0001 · Ramesh · 98765..."
+            placeholder="PT0010 · Ramesh · 98765..."
             value={q}
             onChange={(e) => setQ(e.target.value)}
             className="pl-9"

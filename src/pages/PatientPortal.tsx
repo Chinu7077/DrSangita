@@ -103,7 +103,7 @@ export default function PatientPortal() {
                   value={pid}
                   onChange={(e) => setPid(e.target.value)}
                   required
-                  placeholder="HOM-2026-0001"
+                  placeholder="PT0010"
                   className="pl-9"
                 />
               </div>
@@ -116,7 +116,7 @@ export default function PatientPortal() {
                   value={mobile}
                   onChange={(e) => setMobile(e.target.value)}
                   required
-                  placeholder="9876543210"
+                  placeholder="enter your mobile number "
                   className="pl-9"
                 />
               </div>
