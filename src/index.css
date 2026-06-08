@@ -169,6 +169,18 @@
     @apply ring-2 ring-primary/40 border-primary;
     box-shadow: 0 0 0 4px hsl(152 45% 42% / 0.1);
   }
+
+  .glass {
+    @apply glass-card;
+  }
+
+  .bg-gradient-primary {
+    @apply gradient-primary;
+  }
+
+  .shadow-elegant {
+    box-shadow: var(--shadow-soft);
+  }
 }
 
 @keyframes fadeUp {

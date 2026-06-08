@@ -1,7 +1,8 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Menu, X } from "lucide-react";
+import { Menu, X, UserRound } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 const navLinks = [
   { label: "Home", href: "#home" },
@@ -13,6 +14,7 @@ const navLinks = [
 export default function StickyHeader() {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const onScroll = () => {
@@ -25,9 +27,13 @@ export default function StickyHeader() {
 
   const handleClick = (href: string) => {
     setMenuOpen(false);
+
     const section = document.querySelector(href);
+
     if (section) {
-      section.scrollIntoView({ behavior: "smooth" });
+      section.scrollIntoView({
+        behavior: "smooth",
+      });
     }
   };
 
@@ -41,7 +47,6 @@ export default function StickyHeader() {
     >
       <div className="max-w-6xl mx-auto px-4 sm:px-6">
         <div className="flex items-center justify-between h-16">
-
           {/* Logo + Doctor Info */}
           <div className="flex items-center gap-3">
             <div className="p-2 rounded-lg bg-white shadow-sm flex items-center justify-center">
@@ -63,30 +68,51 @@ export default function StickyHeader() {
           </div>
 
           {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center gap-2">
-            {navLinks.map((link) => (
-              <button
-                key={link.href}
-                onClick={() => handleClick(link.href)}
-                className="px-4 py-2 text-sm font-medium text-gray-600 hover:text-black hover:bg-gray-100 rounded-lg transition-all"
-              >
-                {link.label}
-              </button>
-            ))}
-          </nav>
+          <div className="hidden md:flex items-center gap-3">
+            <nav className="flex items-center gap-2">
+              {navLinks.map((link) => (
+                <button
+                  key={link.href}
+                  onClick={() => handleClick(link.href)}
+                  className="px-4 py-2 text-sm font-medium text-gray-600 hover:text-black hover:bg-gray-100 rounded-lg transition-all"
+                >
+                  {link.label}
+                </button>
+              ))}
+            </nav>
 
-          {/* Mobile Menu Button */}
-          <button
-            onClick={() => setMenuOpen(!menuOpen)}
-            className="md:hidden p-2 rounded-lg hover:bg-gray-100 transition"
-            aria-label="Toggle menu"
-          >
-            {menuOpen ? (
-              <X className="w-5 h-5" />
-            ) : (
-              <Menu className="w-5 h-5" />
-            )}
-          </button>
+            <button
+              onClick={() => navigate("/patient-portal")}
+              className="px-5 py-2 rounded-lg bg-primary text-primary-foreground text-sm font-medium hover:opacity-90 transition"
+            >
+              Patient Portal
+            </button>
+          </div>
+
+          {/* Mobile Actions */}
+          <div className="md:hidden flex items-center gap-2">
+            {/* Patient Portal Icon */}
+            <button
+              onClick={() => navigate("/patient-portal")}
+              className="p-2 rounded-lg bg-primary text-primary-foreground shadow-sm"
+              aria-label="Patient Portal"
+            >
+              <UserRound className="w-5 h-5" />
+            </button>
+
+            {/* Menu Toggle */}
+            <button
+              onClick={() => setMenuOpen(!menuOpen)}
+              className="p-2 rounded-lg hover:bg-gray-100 transition"
+              aria-label="Toggle menu"
+            >
+              {menuOpen ? (
+                <X className="w-5 h-5" />
+              ) : (
+                <Menu className="w-5 h-5" />
+              )}
+            </button>
+          </div>
         </div>
       </div>
 

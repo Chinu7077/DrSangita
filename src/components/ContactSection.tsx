@@ -96,7 +96,7 @@ export default function ContactSection() {
             className="inline-flex items-center gap-2 px-6 py-3 bg-green-500 hover:bg-green-600 text-white rounded-xl font-medium transition-all duration-300 shadow-md"
           >
             <MessageCircle className="w-5 h-5" />
-            Chat on WhatsApp 
+         Book an Appointment
           </a>
         </div>
       </div>

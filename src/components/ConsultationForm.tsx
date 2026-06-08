@@ -49,7 +49,7 @@ const ConsultationForm = () => {
   };
 
   return (
-    <section id="consultation" className="section-padding gradient-hero">
+   <section id="consultation" className="section-padding bg-background">
       <div className="max-w-lg mx-auto">
         <div className="text-center mb-8">
           <p className="text-sm font-medium text-primary uppercase tracking-wide mb-2">

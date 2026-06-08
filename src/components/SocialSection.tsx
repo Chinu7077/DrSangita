@@ -47,6 +47,16 @@ const SocialSection = () => {
             © {new Date().getFullYear()} Dr. Sangita Kumari Nayak • BHMS • All
             rights reserved
           </p>
+
+          <p className="mt-4 text-xs text-muted-foreground">
+            Doctor?
+            <a
+              href="/doctor/login"
+              className="ml-1 text-primary hover:underline"
+            >
+              Login Here
+            </a>
+          </p>
         </div>
       </div>
     </section>
